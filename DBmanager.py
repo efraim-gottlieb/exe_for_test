@@ -78,7 +78,3 @@ class DatabaseManager:
 
     def close(self):
         self.connection.close()
-    
-if __name__ == '__main__':
-    a = DatabaseManager('mydb.db')
-    a.delete_person('326080025')

@@ -10,10 +10,10 @@ class Person:
         self.name = name
         self.age = age
         self.email = email
-        self.cars = []
     
     def add_car(self, car):
-        return DBmanager.cursor.insert_car(car)
+        car.owner_id = self.person_id
+        DBmanager.cursor.execute("UPDATE cars SET owner_id = ? WHERE car_id = ?",(self.person_id, car.car_id))
 
     def get_cars_count(self):
         cars = DBmanager.cursor.execute('SELECT * FROM cars WHERE owner_id = ?', (self.person_id,))
@@ -28,5 +28,7 @@ class Person:
     def to_dict(self):
         return vars(self)
     
-a = Person('326080025', 'efraim', 21, 'efgo583208979@gmail.com')
-mycar = Car('2323', 'toyota', 'corola', 2021, 'blue')
+a = Person('a326080025', 'efraim', 21, 'efgo583208979@gmail.com')
+DBmanager.insert_person(a)
+# mycar = Car(1, 'toyota', 'corola', 2021, 'blue')
+# a.add_car(a)

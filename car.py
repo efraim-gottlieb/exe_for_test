@@ -13,11 +13,7 @@ class Car:
         pass
     
     def __str__(self):
-        """String representation of car"""
-        # TODO: implement
-        pass
+        return "".join([f'{k}: {v}\n' for k,v in vars(self).items()])
     
     def to_dict(self):
-        """Convert car to dictionary"""
-        # TODO: implement
-        pass
+        return vars(self)
