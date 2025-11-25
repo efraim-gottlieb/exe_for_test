@@ -1,6 +1,5 @@
 import sqlite3
-from person import Person
-from car import Car
+
 
 class DatabaseManager:
     def __init__(self, db_name):
@@ -26,13 +25,13 @@ class DatabaseManager:
         FOREIGN KEY (owner_id) REFERENCES persons(person_id))
         """)
 
-    def insert_person(self, person :Person):
+    def insert_person(self, person :object):
         self.cursor.execute("""
         INSERT INTO persons (person_id, name, age, email)
         VALUES """ + f"('{person.person_id}', '{person.name}', {person.age}, '{person.email}')")
         self.connection.commit()
     
-    def insert_car(self, car :Car):
+    def insert_car(self, car :object):
         self.cursor.execute("""
         INSERT INTO cars (car_id, brand, model, year, color, owner_id)
         VALUES """ + f"('{car.car_id}', '{car.brand}', '{car.model}', {car.year}, '{car.color}', '{car.owner_id}')")
@@ -67,8 +66,10 @@ class DatabaseManager:
             return False
 
     def update_person(self, person):
-        self.cursor.execute('UPDATE * FROM person SET  = ? , SET ? = ?,  SET ? = ?,  SET ? = ? WHERE person_id = ?',
-        (person,))
+        self.cursor.execute(
+            "UPDATE persons SET name = ?, age = ?, email = ? WHERE person_id = ?",
+            (person.name, person.age, person.email, person.person_id)
+        )
         self.connection.commit()
 
     def delete_person(self, person_id):
